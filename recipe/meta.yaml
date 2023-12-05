@@ -43,6 +43,9 @@ test:
 
 about:
   home: https://github.com/rwightman/pytorch-image-models
+  description: |
+    timm is a library containing SOTA computer vision models, layers, utilities,
+    optimizers, schedulers, data-loaders, augmentations, and training/evaluation scripts.
   license: Apache-2.0
   license_family: APACHE
   license_file: LICENSE
