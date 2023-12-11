@@ -1,5 +1,5 @@
 {% set name = "timm" %}
-{% set version = "0.6.12" %}
+{% set version = "0.9.12" %}
 
 
 package:
@@ -8,23 +8,27 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 8f1747121598e06a1ea2d00df16d332cc284cdd4596bdc136b490a2122d3aa91
+  sha256: 9121d1cf320f7f32490d893340fd33117bda0a0270eb8282dfd52ae5fd3e1af6
 
 build:
   number: 0
-  script: {{ PYTHON }} -m pip install . -vv
-  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  # torchvision is not available on s390x
+  skip: True  # [py<37 or s390x]
 
 requirements:
   host:
-    - python >=3.6
+    - python
     - pip
+    - wheel
+    - setuptools
   run:
-    - python >=3.6
+    - python
     - pytorch >=1.7
     - torchvision
     - pyyaml
     - huggingface_hub
+    - safetensors
 
 test:
   imports:
@@ -42,6 +46,9 @@ test:
 
 about:
   home: https://github.com/rwightman/pytorch-image-models
+  description: |
+    timm is a library containing SOTA computer vision models, layers, utilities,
+    optimizers, schedulers, data-loaders, augmentations, and training/evaluation scripts.
   license: Apache-2.0
   license_family: APACHE
   license_file: LICENSE
